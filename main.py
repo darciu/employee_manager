@@ -12,7 +12,7 @@ if __name__ == "__main__":
     condition = True
     while condition:
         print(""""Please choose what action do you want to perform:
-                1. Search for a employee
+                1. Search for an employee
                 2. Manage employees
                 3. Exit application""")
         option = input()

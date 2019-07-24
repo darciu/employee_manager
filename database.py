@@ -23,7 +23,7 @@ class BuildDatabase(Database):
                                         firstName text NOT NULL,
                                         lastName text NOT NULL,
                                         sex integer NOT NULL,
-                                        date_of_birth text NOT NULL,
+                                        birth_year integer NOT NULL,
                                         basic_salary real NOT NULL,
                                         level text NOT NULL);"""
 
@@ -43,10 +43,11 @@ class EmployeeDatabase(Database):
     def __init__(self):
         super().__init__()
 
-    def add_to_database(self, firstName, lastName, sex, date_of_birth, basic_salary, level):
+    def add_to_database(self, firstName, lastName, sex, birth_year, basic_salary, level):
 
-        sql = "INSERT INTO employees(firstName,lastName,sex,date_of_birth,basic_salary, level) VALUES(?,?,?,?,?,?)"
-        dataset = (firstName, lastName, sex, date_of_birth, basic_salary, level)
+        sql = "INSERT INTO employees(firstName,lastName,sex,birth_year,basic_salary, level) VALUES(?,?,?,?,?,?)"
+        dataset = (firstName, lastName, sex, birth_year, basic_salary, level)
         cur = self.conn.cursor()
 
         cur.execute(sql,dataset)
+        self.conn.commit()

@@ -25,7 +25,9 @@ def search_menu():
         elif option == "3":
             condition = False
         elif option == "4":
+            print("Goodbye")
             sys.exit()
         else:
             print("Provided answer is not correct!")
+
 
