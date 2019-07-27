@@ -1,5 +1,6 @@
 from search_employee import search_menu
 from manage_employee import manage_menu
+from manage_departments import manage_dept_menu
 import sys
 from database import BuildDatabase
 
@@ -14,13 +15,16 @@ if __name__ == "__main__":
         print(""""Please choose what action do you want to perform:
                 1. Search for an employee
                 2. Manage employees
-                3. Exit application""")
+                3. Manage departments
+                4. Exit application""")
         option = input()
         if option == "1":
             search_menu()
         elif option == "2":
             manage_menu()
         elif option == "3":
+            manage_dept_menu()
+        elif option == "4":
             print("Goodbye")
             sys.exit()
         else:

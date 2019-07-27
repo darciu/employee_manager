@@ -28,6 +28,6 @@ def search_menu():
             print("Goodbye")
             sys.exit()
         else:
-            print("Provided answer is not correct!")
+            print("Provided value is not correct!")
 
 

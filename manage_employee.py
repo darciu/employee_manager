@@ -24,7 +24,7 @@ def manage_menu():
             print("Goodbye")
             sys.exit()
         else:
-            print("Provided answer is not correct!")
+            print("Provided value is not correct!")
 
 def manage_single_menu():
     condition = True
@@ -45,7 +45,7 @@ def manage_single_menu():
             print("Goodbye")
             sys.exit()
         else:
-            print("Provided answer is not correct!")
+            print("Provided value is not correct!")
 
 
 def add_single_employee():
@@ -137,6 +137,10 @@ def get_basic_salary():
         else:
             print("Basic salary has to be a number")
 
+
+def get_department():
+    while True:
+        department = input("Please provide department: ")
 
 
 # uzupełnić dodawanie innych typów pracowników
