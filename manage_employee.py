@@ -1,6 +1,6 @@
 import sys
-from employees import Trainee, Junior, Mid, Senior, Administrative, Executive
-
+from employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
+from database import DepartmentDatabase
 
 
 
@@ -57,36 +57,76 @@ def add_single_employee():
                 If you want to back, press Enter...""")
         option = input()
         if option.lower() == "trainee":
-            personal_data = get_personal_data()
+            personal_data = get_personal_data_ver1()
+
             Trainee(personal_data[0],personal_data[1],personal_data[2],personal_data[3],
-                    personal_data[4]).add_to_database()
+                    personal_data[4], personal_data[5]).add_to_database()
 
 
         elif option.lower() == "junior":
-            pass
+            personal_data = get_personal_data_ver1()
+
+            Junior(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
+                    personal_data[4], personal_data[5]).add_to_database()
+
         elif option.lower() == "mid":
-            pass
+            personal_data = get_personal_data_ver1()
+
+            Mid(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
+                   personal_data[4], personal_data[5]).add_to_database()
+
         elif option.lower() == "senior":
-            pass
+            personal_data = get_personal_data_ver1()
+
+            Senior(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
+                   personal_data[4], personal_data[5]).add_to_database()
+
         elif option.lower() == "administrative":
-            pass
+            personal_data = get_personal_data_ver2()
+
+            Administrative(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
+                   personal_data[4]).add_to_database()
+
+
+
         elif option.lower() == "manager":
-            pass
+            personal_data = get_personal_data_ver1()
+
+            Manager(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
+                   personal_data[4], personal_data[5]).add_to_database()
+
+
         elif option.lower() == "executive":
-            pass
+            personal_data = get_personal_data_ver2()
+
+            Executive(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
+                           personal_data[4]).add_to_database()
+
+
+
         elif option == "":
             condition = False
         else:
             print("Invalid position name")
 
 
+########################################
 
-def get_personal_data():
+
+
+def get_personal_data_ver1():
+
+    personal_data = list([get_name(),get_surname(),get_sex(),get_birth_year(),get_basic_salary(),get_department_id()])
+
+    return personal_data
+
+
+
+def get_personal_data_ver2():
 
     personal_data = list([get_name(),get_surname(),get_sex(),get_birth_year(),get_basic_salary()])
 
     return personal_data
-
 
 def get_name():
     while True:
@@ -138,10 +178,21 @@ def get_basic_salary():
             print("Basic salary has to be a number")
 
 
-def get_department():
+def get_department_id():
+    db_dept = DepartmentDatabase()
     while True:
-        department = input("Please provide department: ")
+        dept_list = db_dept.return_dept_name_list()
+        dept_name = input("Please provide department (if no department press Enter): ")
+        if dept_name in dept_list:
+            department_id = db_dept.get_department_id(dept_name)
+            return department_id
+
+        elif dept_name == "":
+            return None
+        else:
+            print("Invalid value!")
 
 
-# uzupełnić dodawanie innych typów pracowników
-# dodać wybór department (na podstawie dostępnych w bazie) oraz dodawanie department z managera
+
+
+
