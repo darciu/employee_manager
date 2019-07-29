@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import sys
 
+from employees import Trainee, Junior, Mid, Senior, Manager, Administrative, Executive
 
 def get_excel_file():
     """Returns pandas dataframe"""
@@ -30,7 +31,26 @@ def import_employees():
     if not import_df_conditions(df):
         return
 
+    # dataframe has passed input conditions
 
+    question = input("There are {0} records in imported dataframe. Do you wish to add them to the database? If so, write Y ".format(df.shape[0]))
+
+    if question.upper() != "Y":
+        return
+
+    for index, row in df.iterrows():
+        class_arguments = list([row['firstName'], row['lastName'], row['sex'], row['birth_year'], row['basic_salary'], None])
+        emp_class_dictionary = {"Trainee": Trainee(*class_arguments),
+                                "Junior": Junior(*class_arguments),
+                                "Mid": Mid(*class_arguments),
+                                "Senior": Senior(*class_arguments),
+                                "Administrative": Administrative(*class_arguments),
+                                "Manager": Manager(*class_arguments),
+                                "Executive": Executive(*class_arguments)}
+
+
+        emp = emp_class_dictionary.get(row['position'])
+        emp.add_to_database()
 
 
 

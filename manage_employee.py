@@ -14,7 +14,7 @@ def manage_menu():
     condition = True
     while condition:
         print("""Please select one of the following options:
-                1. Manage single employee (add or search)
+                1. Manage single employee (add or remove)
                 2. Import or export employees (.xlsx or .xls)
                 3. Back
                 4. Exit application""")
