@@ -1,6 +1,11 @@
 import sys
 from employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
 from database import DepartmentDatabase
+from excel_management import import_export_employees
+
+
+def load_from_excel():
+    print("Required columns: firstName (text), lastName (text), sex (0 or 1), birth_year(1900-2000 integer), basic_salary(real number), position(text)")
 
 
 
@@ -10,14 +15,14 @@ def manage_menu():
     while condition:
         print("""Please select one of the following options:
                 1. Manage single employee (add or search)
-                2. Load employees from .xlsx (or .xls) file
+                2. Import or export employees (.xlsx or .xls)
                 3. Back
                 4. Exit application""")
         option = input()
         if option == "1":
             manage_single_menu()
         elif option == "2":
-            pass
+            import_export_employees()
         elif option == "3":
             condition = False
         elif option == "4":
