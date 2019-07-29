@@ -29,7 +29,7 @@ class BuildDatabase(Database):
                                         basic_salary real NOT NULL,
                                         level text NOT NULL,
                                         department_id integer,
-                                        position integer NOT NULL,
+                                        position text NOT NULL,
                                         FOREIGN KEY (department_id) REFERENCES department(department_id));"""
 
         sql_create_department = """ CREATE TABLE IF NOT EXISTS departments(
@@ -91,15 +91,31 @@ class DepartmentDatabase(Database):
 
     def delete_department(self, dept_name):
 
-        sql = "DELETE FROM departments WHERE department_name = ?"
-        dataset = (dept_name,)
+        department_id = self.get_department_id(dept_name)
+
+        sql1 = "DELETE FROM departments WHERE department_name = ?"
+        sql2 = "UPDATE employees SET department_id = NULL WHERE department_id = ?"
+
+        dataset1 = (dept_name,)
+        dataset2 = (department_id,)
+
         cur = self.conn.cursor()
-        cur.execute(sql, dataset)
+        cur.execute(sql1, dataset1)
+        cur.execute(sql2,dataset2)
+
         self.conn.commit()
 
     def get_department_id(self, dept_name):
         sql = "SELECT department_id FROM departments WHERE department_name = ?"
         dataset = (dept_name,)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        row = cur.fetchone()
+        return row[0]
+
+    def get_department_name(self,department_id):
+        sql = "SELECT department_name FROM departments WHERE department_id = ?"
+        dataset = (department_id,)
         cur = self.conn.cursor()
         cur.execute(sql, dataset)
         row = cur.fetchone()
@@ -118,6 +134,7 @@ class DepartmentDatabase(Database):
         for row in rows:
             print("First name: ",row[1])
             print("Last name: ", row[2])
+            print("Employee ID: ",row[0])
             if row[3] == 1:
                 print("Sex: Male")
             elif row[3] == 0:
@@ -129,12 +146,52 @@ class DepartmentDatabase(Database):
             a = input("Press Enter...\n")
 
 
+    def print_position_employees(self, position):
+        n = datetime.datetime.now()
+        cur = self.conn.cursor()
+        sql = "SELECT * FROM employees WHERE position = ?"
+        dataset = (position,)
+        cur.execute(sql,dataset)
 
+        rows = cur.fetchall()
 
+        if len(rows) == 0:
+            print("There are no employees no this position\n")
+            a = input("Press Enter...")
+            return
+
+        for row in rows:
+            print("First name: ", row[1])
+            print("Last name: ", row[2])
+            print("Employee ID: ", row[0])
+            if row[3] == 1:
+                print("Sex: Male")
+            elif row[3] == 0:
+                print("Sex: Female")
+            print("Age: ", int(n.year) - row[4])
+            print("Basic salary: ", row[5])
+            print("Level: ", row[6])
+            if row[7] == None:
+                print("Department: ", row[7])
+            else:
+                department_name = self.get_department_name(row[7])
+                print("Department: ", department_name)
+            a = input("Press Enter to continue...\n")
+
+    def check_ID(self, ID):
+
+        sql = "SELECT * FROM employees WHERE employee_id = ?"
+        dataset = (ID,)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        row = cur.fetchone()
+        return row
 
 class EmployeeDatabase(Database):
     def __init__(self):
         super().__init__()
+
+
 
     def add_to_database(self, firstName, lastName, sex, birth_year, basic_salary, level, department_id, position):
 
@@ -143,3 +200,48 @@ class EmployeeDatabase(Database):
         cur = self.conn.cursor()
         cur.execute(sql,dataset)
         self.conn.commit()
+
+    def update_name(self, firstName, employee_id):
+        sql = "UPDATE  employees SET firstName = ? WHERE employee_id = ?"
+        dataset = (firstName, employee_id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("First name has been successfully updated\n\nPress Enter to continue...")
+        a = input()
+
+    def update_surname(self, lastName, employee_id):
+        sql = "UPDATE  employees SET lastName = ? WHERE employee_id = ?"
+        dataset = (lastName, employee_id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("Last name has been successfully updated\n\nPress Enter to continue...")
+        a = input()
+
+    def update_basic_salary(self, basic_salary, employee_id):
+        sql = "UPDATE  employees SET basic_salary = ? WHERE employee_id = ?"
+        dataset = (basic_salary, employee_id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("Basic salary has been successfully updated\n\nPress Enter to continue...")
+        a = input()
+
+    def update_position(self, position, employee_id):
+        sql = "UPDATE  employees SET position = ? WHERE employee_id = ?"
+        dataset = (lastName, employee_id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("Position has been successfully updated\n\nPress Enter to continue...")
+        a = input()
+
+    def update_department_id(self, department_id, employee_id):
+        sql = "UPDATE  employees SET department_id = ? WHERE employee_id = ?"
+        dataset = (department_id, employee_id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("Department has been successfully updated\n\nPress Enter to continue...")
+        a = input()

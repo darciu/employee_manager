@@ -10,7 +10,7 @@ def manage_menu():
     while condition:
         print("""Please select one of the following options:
                 1. Manage single employee (add or search)
-                2. Load employees from Excel file
+                2. Load employees from .xlsx (or .xls) file
                 3. Back
                 4. Exit application""")
         option = input()
@@ -31,7 +31,7 @@ def manage_single_menu():
     while condition:
         print("""Please select one of the following options:
                 1. Add employee
-                2. Search employee
+                2. Remove employee
                 3. Back
                 4. Exit application""")
         option = input()
