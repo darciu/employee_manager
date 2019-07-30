@@ -21,6 +21,7 @@ class Employee:
     def add_to_database(self):
 
         self.db.add_to_database(self.firstName, self.lastName, self.sex, self.birth_year, self.basic_salary, self.level, self.department_id, self.position)
+        self.db.remove_employee_duplicates()
         print("{0} {1} has been successfully added to database!\n\n".format(self.firstName, self.lastName))
 
     def display_employee_data(self):
@@ -110,6 +111,8 @@ class Employee:
                 return
             else:
                 print("Invalid value!\n")
+
+
 
 
 class Trainee(Employee):

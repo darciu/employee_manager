@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 import datetime
+import pandas as pd
 
 class Database:
     def __init__(self):
@@ -245,3 +246,27 @@ class EmployeeDatabase(Database):
         self.conn.commit()
         print("Department has been successfully updated\n\nPress Enter to continue...")
         a = input()
+
+    def remove_employee_duplicates(self):
+        """Removes duplicate employees from database by firstName, lastName, sex, birth_year set of columns"""
+        sql = "DELETE FROM employees WHERE rowid NOT IN (SELECT MIN(rowid) FROM employees GROUP BY firstName, lastName, sex, birth_year);"
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        self.conn.commit()
+
+    def export_to_df(self):
+        """Read employees table and return dataframe"""
+
+        sql = "SELECT * FROM employees"
+        df = pd.read_sql_query(sql, self.conn)
+
+        return df
+
+    def remove_employee(self,employee_id):
+        sql = "DELETE FROM employees WHERE employee_id = ?"
+        dataset = (employee_id,)
+        cur = self.conn.cursor()
+        cur.execute(sql,dataset)
+        self.conn.commit()
+
+        print("Employee has been successfull removed!\n")

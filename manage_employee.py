@@ -1,7 +1,8 @@
 import sys
 from employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
-from database import DepartmentDatabase
+from database import DepartmentDatabase, EmployeeDatabase
 from excel_management import import_export_employees
+from search_employee import get_employee
 
 
 def load_from_excel():
@@ -43,7 +44,8 @@ def manage_single_menu():
         if option == "1":
             add_single_employee()
         elif option == "2":
-            pass
+            remove_employee()
+
         elif option == "3":
             condition = False
         elif option == "4":
@@ -52,6 +54,12 @@ def manage_single_menu():
         else:
             print("Provided value is not correct!")
 
+def remove_employee():
+    row = get_employee()
+    question = input("Do you really want to remove employee with ID {0}? ({1} {2}, year of birth {3}) (Y) ".format(row[0],row[1],row[2],row[4]))
+    if question.upper() == "Y":
+        db = EmployeeDatabase()
+        db.remove_employee(row[0])
 
 def add_single_employee():
     condition = True

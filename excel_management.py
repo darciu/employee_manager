@@ -3,7 +3,7 @@ import os
 import sys
 
 from employees import Trainee, Junior, Mid, Senior, Manager, Administrative, Executive
-
+from database import EmployeeDatabase
 def get_excel_file():
     """Returns pandas dataframe"""
     for file in os.listdir('input'):
@@ -53,6 +53,16 @@ def import_employees():
         emp.add_to_database()
 
 
+def export_employees():
+
+    question = input("Do you really want to export employees table to excel file? (Y) ")
+    if question.upper() == "Y":
+        edb = EmployeeDatabase()
+        df = edb.export_to_df()
+        df = df[['firstName','lastName','sex','birth_year','basic_salary','position']]
+        df.to_excel("output\employees_export.xlsx",index=False)
+
+        print("Table has been successfully exported.\nRows count: {0}\n\n".format(df.shape[0]))
 
 
 def import_export_employees():
@@ -67,7 +77,7 @@ def import_export_employees():
         if option == "1":
             import_employees()
         elif option == "2":
-            pass
+            export_employees()
         elif option == "3":
             condition = False
         elif option == "4":
