@@ -112,6 +112,23 @@ class Employee:
             else:
                 print("Invalid value!\n")
 
+    def min_salary(self):
+        return self.db.get_min_salary()
+
+    def max_salary(self):
+        return self.db.get_max_salary()
+
+    def average_salary(self):
+        return self.db.get_average_salary()
+
+    def sum_salary(self):
+        return self.db.get_sum_salary()
+
+    def count_salary(self):
+        return self.db.get_count_salary()
+
+    def count_lt_salary(self,basic_salary):
+        return self.db.get_count_lt_salary(basic_salary)
 
 
 

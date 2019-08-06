@@ -270,3 +270,47 @@ class EmployeeDatabase(Database):
         self.conn.commit()
 
         print("Employee has been successfull removed!\n")
+
+    def get_min_salary(self):
+        sql = "SELECT MIN(basic_salary) FROM employees"
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        row = cur.fetchone()
+        return row[0]
+
+    def get_max_salary(self):
+        sql = "SELECT MAX(basic_salary) FROM employees"
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        row = cur.fetchone()
+        return row[0]
+
+    def get_average_salary(self):
+        sql = "SELECT AVG(basic_salary) FROM employees"
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        row = cur.fetchone()
+        return row[0]
+
+    def get_count_salary(self):
+        sql = "SELECT COUNT(basic_salary) FROM employees"
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        row = cur.fetchone()
+        return row[0]
+
+    def get_sum_salary(self):
+        sql = "SELECT SUM(basic_salary) FROM employees"
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        row = cur.fetchone()
+        return row[0]
+
+
+    def get_count_lt_salary(self,basic_salary):
+        sql = "SELECT COUNT(basic_salary) FROM employees WHERE basic_salary <= ?"
+        dataset = (basic_salary,)
+        cur = self.conn.cursor()
+        cur.execute(sql,dataset)
+        row = cur.fetchone()
+        return row[0]

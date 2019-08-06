@@ -48,6 +48,20 @@ def emp_personal_data_menu(employee, id):
         else:
             print("Invalid value!")
 
+def employee_statistics(employee):
+
+    percentile = round((employee.count_lt_salary(employee.basic_salary)/employee.count_salary()) * 100,0)
+    print("{0}'s basic salary is {1}.\n".format(employee.firstName, employee.basic_salary))
+    print("That is {0} more than the minimum and {1} less than maximum salary.".format(
+        employee.basic_salary - employee.min_salary(), employee.max_salary() - employee.basic_salary
+    ))
+
+    print("This is {0} percentile".format(percentile))
+
+    print("\nThere are {0} employees in company.\nAverage salary is {1}.\nTotal sum of salaries is {2}\n\n".format(
+        employee.count_salary(),round(employee.average_salary(),1),employee.sum_salary()
+    ))
+
 
 def employee_menu(employee, id):
     condition = True
@@ -63,7 +77,7 @@ def employee_menu(employee, id):
         if option == "1":
             emp_personal_data_menu(employee, id)
         elif option == "2":
-            pass
+            employee_statistics(employee)
         elif option == "3":
             pass
         elif option == "4":
@@ -157,6 +171,7 @@ def get_employee():
         if ID.isnumeric():
             row = db.check_ID(ID)
             if row != None:
+                print("Hello {0}!\n".format(row[1]))
                 return row
             else:
                 print("There is no such ID in database!\n")
