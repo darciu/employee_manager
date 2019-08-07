@@ -84,7 +84,7 @@ class DepartmentDatabase(Database):
     def update_dept_name(self, dept_name, dept_name_new):
 
         sql = "UPDATE departments SET department_name = ? WHERE department_name = ?"
-        dataset = (dept_name,dept_name_new)
+        dataset = (dept_name_new,dept_name)
         cur = self.conn.cursor()
 
         cur.execute(sql, dataset)

@@ -39,7 +39,7 @@ def manage_dept_menu():
             print("Write down the name of department you want to remove")
             dept_name = get_department_name()
             if dept_name in dept_list:
-                question = input("In order to remove this department from database, please write Y")
+                question = input("In order to remove this department from database, please write (Y) ")
                 if question.upper() == "Y":
                     db_dept.delete_department(dept_name)
                     print("{0} department has been successfully removed from database!\n".format(dept_name))

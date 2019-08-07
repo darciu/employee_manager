@@ -1,5 +1,6 @@
 import time,datetime
 from database import EmployeeDatabase, DepartmentDatabase
+import sys
 
 class Employee:
     """Basic structure of employee"""
@@ -130,12 +131,36 @@ class Employee:
     def count_lt_salary(self,basic_salary):
         return self.db.get_count_lt_salary(basic_salary)
 
+    def print_special_functions(self):
+        condition = True
+        while condition:
+            print("""Choose from below special functions:
+                    1. Export employee's information to text file
+                    2. Increase basic salary per 100
+                    3. Add a form of courtesy to the name (Mr/Mrs)
+                    4. Back
+                    5. Exit application""")
+            option = input()
+
+            if option == "1":
+                pass
+            elif option == "2":
+                pass
+            elif option == "3":
+                pass
+            elif option == "4":
+                condition = False
+            elif option == "5":
+                print("Goodbye!")
+            else:
+                print("Invalid value!")
 
 
 class Trainee(Employee):
     def __init__(self, *args):
         super().__init__(*args)
         self.position = "Trainee"
+
 
 
 class Junior(Employee):
@@ -169,7 +194,34 @@ class Manager(Employee):
         self.level = "D"
         self.position = "Manager"
 
-class Executive(Manager, Administrative):
+    def print_special_functions(self):
+        condition = True
+        while condition:
+            print("""Choose from below special functions:
+                    1. Export employee's information to text file
+                    2. Increase basic salary per 500
+                    3. Double basic salary
+                    4. Add a form of courtesy to the name (Sir/Madame)
+                    5. Back
+                    6. Exit application""")
+            option = input()
+
+            if option == "1":
+                pass
+            elif option == "2":
+                pass
+            elif option == "3":
+                pass
+            elif option == "4":
+                pass
+            elif option == "5":
+                condition = False
+            elif option == "6":
+                print("Goodbye!")
+            else:
+                print("Invalid value!")
+
+class Executive(Manager):
     def __init__(self, *args):
         super().__init__(*args)
         self.level = "E"

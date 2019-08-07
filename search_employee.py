@@ -62,6 +62,11 @@ def employee_statistics(employee):
         employee.count_salary(),round(employee.average_salary(),1),employee.sum_salary()
     ))
 
+def employee_special_functions(employee):
+    employee.print_special_functions()
+
+
+
 
 def employee_menu(employee, id):
     condition = True
@@ -79,7 +84,7 @@ def employee_menu(employee, id):
         elif option == "2":
             employee_statistics(employee)
         elif option == "3":
-            pass
+            employee_special_functions(employee)
         elif option == "4":
             condition = False
         elif option == "5":
@@ -87,7 +92,7 @@ def employee_menu(employee, id):
         else:
             print("Invalid value!")
 
-    #staty to percentyl zarobków
+
 
 def search_by_ID():
     """Create Employee instance according to the position"""
@@ -131,7 +136,7 @@ def see_by_position():
     if position in position_list:
         db_dept.print_position_employees(position)
     else:
-        print("Invalid value...\n")
+        print("Invalid value...\n\n")
 
 
 
@@ -177,3 +182,6 @@ def get_employee():
                 print("There is no such ID in database!\n")
         else:
             print("Invalid ID format!\n")
+
+
+            #id jest już w employee, więc można się go pozbyć
