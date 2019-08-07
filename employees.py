@@ -1,6 +1,6 @@
-import time,datetime
+import datetime
 from database import EmployeeDatabase, DepartmentDatabase
-import sys
+
 
 class Employee:
     """Basic structure of employee"""
@@ -131,6 +131,25 @@ class Employee:
     def count_lt_salary(self,basic_salary):
         return self.db.get_count_lt_salary(basic_salary)
 
+    def export_txt(self):
+        n = datetime.datetime.now()
+        f = open("output/{0}_{1}_export.txt".format(self.firstName, self.lastName), "w+")
+        f.write("AUTOMATIC EMPLOYEE MANAGER EXPORT\n")
+        f.write("FIRST NAME: {0}\n".format(self.firstName))
+        f.write("LAST NAME: {0}\n".format(self.lastName))
+        if self.sex == 0:
+            f.write("SEX: FEMALE\n")
+        elif self.sex == 1:
+            f.write("SEX: MALE\n")
+        f.write("SALARY: {0}\n".format(self.basic_salary))
+        f.write("LEVEL: {0}\n\n".format(self.level))
+        f.write("PRODUCED AT {0}-{1}-{2} {3}:{4}".format(n.year,n.month,n.day,n.hour,n.minute))
+
+
+        f.close()
+
+        print("File has been created!\n")
+
     def print_special_functions(self):
         condition = True
         while condition:
@@ -143,7 +162,14 @@ class Employee:
             option = input()
 
             if option == "1":
-                pass
+
+                question = input(
+                    "Are you sure to export information for {0} {1}? (Y) ".format(self.firstName, self.lastName))
+
+                if question.upper() == "Y":
+
+                    self.export_txt()
+
             elif option == "2":
                 pass
             elif option == "3":
@@ -154,6 +180,7 @@ class Employee:
                 print("Goodbye!")
             else:
                 print("Invalid value!")
+
 
 
 class Trainee(Employee):
@@ -199,7 +226,7 @@ class Manager(Employee):
         while condition:
             print("""Choose from below special functions:
                     1. Export employee's information to text file
-                    2. Increase basic salary per 500
+                    2. Increase basic salary by 500
                     3. Double basic salary
                     4. Add a form of courtesy to the name (Sir/Madame)
                     5. Back
@@ -207,9 +234,17 @@ class Manager(Employee):
             option = input()
 
             if option == "1":
-                pass
+
+                question = input(
+                    "Are you sure to export information for {0} {1}? (Y) ".format(self.firstName, self.lastName))
+                if question.upper() == "Y":
+
+                    self.export_txt()
+
             elif option == "2":
-                pass
+                question = input("Are you sure to increase salary by 500? Current salary is {0} (Y)".format(self.basic_salary))
+                if question.upper() == "Y":
+                    pass
             elif option == "3":
                 pass
             elif option == "4":
