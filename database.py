@@ -188,6 +188,8 @@ class DepartmentDatabase(Database):
         row = cur.fetchone()
         return row
 
+
+
 class EmployeeDatabase(Database):
     def __init__(self):
         super().__init__()
@@ -314,3 +316,22 @@ class EmployeeDatabase(Database):
         cur.execute(sql,dataset)
         row = cur.fetchone()
         return row[0]
+
+    def increase_basic_salary(self,basic_salary,increase, id):
+        sql = "UPDATE employees SET basic_salary = ? WHERE employee_id = ?"
+        new_salary = basic_salary + increase
+
+        dataset = (new_salary,id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("Basic salary has been increased by {0} and is now equal {1}\n\n".format(increase, new_salary))
+
+    def add_courtesy(self,firstName, courtesy,id):
+        sql = "UPDATE employees SET firstName = ? WHERE employee_id = ?"
+        new_name = courtesy + " " + firstName
+        dataset = (new_name, id)
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
+        print("First name is now: {0}\n\n".format(new_name))

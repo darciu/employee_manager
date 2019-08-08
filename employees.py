@@ -1,6 +1,6 @@
 import datetime
 from database import EmployeeDatabase, DepartmentDatabase
-
+import sys
 
 class Employee:
     """Basic structure of employee"""
@@ -150,12 +150,12 @@ class Employee:
 
         print("File has been created!\n")
 
-    def print_special_functions(self):
+    def print_special_functions(self, id):
         condition = True
         while condition:
             print("""Choose from below special functions:
                     1. Export employee's information to text file
-                    2. Increase basic salary per 100
+                    2. Increase basic salary by 100
                     3. Add a form of courtesy to the name (Mr/Mrs)
                     4. Back
                     5. Exit application""")
@@ -171,13 +171,32 @@ class Employee:
                     self.export_txt()
 
             elif option == "2":
-                pass
+                question = input("Are you sure to increase salary by 100? Current salary is {0} (Y) ".format(self.basic_salary))
+                if question.upper() == "Y":
+                    self.db.increase_basic_salary(self.basic_salary,100,id)
+
             elif option == "3":
-                pass
+
+                question = input("Are you sure to add a form of courtesy before first name? (Y) ")
+                if question.upper() == "Y":
+                    if self.sex == 1:
+                        if self.firstName[:3] != "Mr ":
+                            self.db.add_courtesy(self.firstName,"Mr",id)
+                            self.firstName = "Mr " + self.firstName
+                        else:
+                            print("It seems that there is already Mr before first name!\n")
+                    elif self.sex == 0:
+                        if self.firstName[:4] != "Mrs ":
+                            self.db.add_courtesy(self.firstName,"Mrs",id)
+                            self.firstName = "Mrs " + self.firstName
+                        else:
+                            print("It seems that there is already Mrs before first name!\n")
+
             elif option == "4":
                 condition = False
             elif option == "5":
                 print("Goodbye!")
+                sys.exit()
             else:
                 print("Invalid value!")
 
@@ -221,7 +240,7 @@ class Manager(Employee):
         self.level = "D"
         self.position = "Manager"
 
-    def print_special_functions(self):
+    def print_special_functions(self, id):
         condition = True
         while condition:
             print("""Choose from below special functions:
@@ -242,17 +261,38 @@ class Manager(Employee):
                     self.export_txt()
 
             elif option == "2":
-                question = input("Are you sure to increase salary by 500? Current salary is {0} (Y)".format(self.basic_salary))
+                question = input("Are you sure to increase salary by 500? Current salary is {0} (Y) ".format(self.basic_salary))
                 if question.upper() == "Y":
-                    pass
+                    self.db.increase_basic_salary(self.basic_salary,500,id)
+
             elif option == "3":
-                pass
+                question = input(
+                    "Are you sure to double salary? Current salary is {0} (Y) ".format(self.basic_salary))
+                if question.upper() == "Y":
+
+
+                    self.db.increase_basic_salary(self.basic_salary,self.basic_salary,id)
+
             elif option == "4":
-                pass
+                question = input("Are you sure to add a form of courtesy before first name? (Y) ")
+                if question.upper() == "Y":
+                    if self.sex == 1:
+                        if self.firstName[:4] != "Sir ":
+                            self.db.add_courtesy(self.firstName, "Sir", id)
+                            self.firstName = "Sir " + self.firstName
+                        else:
+                            print("It seems that there is already Sir before first name!\n")
+                    elif self.sex == 0:
+                        if self.firstName[:7] != "Madame ":
+                            self.db.add_courtesy(self.firstName, "Madame", id)
+                            self.firstName = "Madame " + self.firstName
+                        else:
+                            print("It seems that there is already Madame before first name!\n")
             elif option == "5":
                 condition = False
             elif option == "6":
                 print("Goodbye!")
+                sys.exit()
             else:
                 print("Invalid value!")
 

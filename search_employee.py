@@ -62,8 +62,6 @@ def employee_statistics(employee):
         employee.count_salary(),round(employee.average_salary(),1),employee.sum_salary()
     ))
 
-def employee_special_functions(employee):
-    employee.print_special_functions()
 
 
 
@@ -84,7 +82,7 @@ def employee_menu(employee, id):
         elif option == "2":
             employee_statistics(employee)
         elif option == "3":
-            employee_special_functions(employee)
+            employee.print_special_functions(id)
         elif option == "4":
             condition = False
         elif option == "5":
