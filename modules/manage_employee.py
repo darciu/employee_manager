@@ -1,12 +1,9 @@
 import sys
-from employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
-from database import DepartmentDatabase, EmployeeDatabase
-from excel_management import import_export_employees
-from search_employee import get_employee
+from modules.employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
+from modules.database import DepartmentDatabase, EmployeeDatabase
+from modules.excel_management import import_export_employees
+from modules.search_employee import get_employee
 
-
-def load_from_excel():
-    print("Required columns: firstName (text), lastName (text), sex (0 or 1), birth_year(1900-2000 integer), basic_salary(real number), position(text)")
 
 
 
@@ -42,8 +39,11 @@ def manage_single_menu():
                 4. Exit application""")
         option = input()
         if option == "1":
+
             add_single_employee()
+
         elif option == "2":
+
             remove_employee()
 
         elif option == "3":
@@ -54,25 +54,19 @@ def manage_single_menu():
         else:
             print("Provided value is not correct!")
 
-def remove_employee():
-    row = get_employee()
-    question = input("Do you really want to remove employee with ID {0}? ({1} {2}, year of birth {3}) (Y) ".format(row[0],row[1],row[2],row[4]))
-    if question.upper() == "Y":
-        db = EmployeeDatabase()
-        db.remove_employee(row[0])
 
 def add_single_employee():
     condition = True
     while condition:
         print("""Write down what position new employee is:
                 Trainee, Junior, Mid, Senior, Administrative, Manager, Executive.
-                
+
                 If you want to back, press Enter...""")
         option = input()
         if option.lower() == "trainee":
             personal_data = get_personal_data_ver1()
 
-            Trainee(personal_data[0],personal_data[1],personal_data[2],personal_data[3],
+            Trainee(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
                     personal_data[4], personal_data[5]).add_to_database()
 
 
@@ -80,13 +74,13 @@ def add_single_employee():
             personal_data = get_personal_data_ver1()
 
             Junior(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
-                    personal_data[4], personal_data[5]).add_to_database()
+                   personal_data[4], personal_data[5]).add_to_database()
 
         elif option.lower() == "mid":
             personal_data = get_personal_data_ver1()
 
             Mid(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
-                   personal_data[4], personal_data[5]).add_to_database()
+                personal_data[4], personal_data[5]).add_to_database()
 
         elif option.lower() == "senior":
             personal_data = get_personal_data_ver1()
@@ -98,7 +92,7 @@ def add_single_employee():
             personal_data = get_personal_data_ver2()
 
             Administrative(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
-                   personal_data[4]).add_to_database()
+                           personal_data[4]).add_to_database()
 
 
 
@@ -106,14 +100,14 @@ def add_single_employee():
             personal_data = get_personal_data_ver1()
 
             Manager(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
-                   personal_data[4], personal_data[5]).add_to_database()
+                    personal_data[4], personal_data[5]).add_to_database()
 
 
         elif option.lower() == "executive":
             personal_data = get_personal_data_ver2()
 
             Executive(personal_data[0], personal_data[1], personal_data[2], personal_data[3],
-                           personal_data[4]).add_to_database()
+                      personal_data[4]).add_to_database()
 
 
 
@@ -121,6 +115,16 @@ def add_single_employee():
             condition = False
         else:
             print("Invalid position name")
+
+
+def remove_employee():
+    row = get_employee()
+    question = input("Do you really want to remove employee with ID {0}? ({1} {2}, year of birth {3}) (Y) ".format(row[0],row[1],row[2],row[4]))
+    if question.upper() == "Y":
+        db = EmployeeDatabase()
+        db.remove_employee(row[0])
+
+
 
 
 ########################################

@@ -15,6 +15,11 @@ class Database:
         except Error as e:
             print(e)
 
+    def execute_sql(self,sql,dataset):
+        """executes and commits sql with given dataset"""
+        cur = self.conn.cursor()
+        cur.execute(sql, dataset)
+        self.conn.commit()
 
 class BuildDatabase(Database):
     """Create tables in database"""
@@ -43,7 +48,6 @@ class BuildDatabase(Database):
 
 
     def create_table(self,conn,sql_statement):
-        """"""
         try:
             cur = conn.cursor()
             cur.execute(sql_statement)
@@ -51,6 +55,8 @@ class BuildDatabase(Database):
 
         except Error as e:
             print(e)
+
+
 
 class DepartmentDatabase(Database):
 
@@ -61,10 +67,9 @@ class DepartmentDatabase(Database):
 
         sql = "INSERT INTO departments(department_name) VALUES(?);"
         dataset = (dept_name,)
-        cur = self.conn.cursor()
 
-        cur.execute(sql,dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
 
     def return_dept_name_list(self):
 
@@ -85,10 +90,7 @@ class DepartmentDatabase(Database):
 
         sql = "UPDATE departments SET department_name = ? WHERE department_name = ?"
         dataset = (dept_name_new,dept_name)
-        cur = self.conn.cursor()
-
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
 
     def delete_department(self, dept_name):
 
@@ -100,11 +102,8 @@ class DepartmentDatabase(Database):
         dataset1 = (dept_name,)
         dataset2 = (department_id,)
 
-        cur = self.conn.cursor()
-        cur.execute(sql1, dataset1)
-        cur.execute(sql2,dataset2)
-
-        self.conn.commit()
+        self.execute_sql(sql1,dataset1)
+        self.execute_sql(sql2, dataset2)
 
     def get_department_id(self, dept_name):
         sql = "SELECT department_id FROM departments WHERE department_name = ?"
@@ -200,61 +199,52 @@ class EmployeeDatabase(Database):
 
         sql = "INSERT INTO employees(firstName,lastName,sex,birth_year,basic_salary, level, department_id, position) VALUES(?,?,?,?,?,?,?,?);"
         dataset = (firstName, lastName, sex, birth_year, basic_salary, level, department_id, position)
-        cur = self.conn.cursor()
-        cur.execute(sql,dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
 
     def update_name(self, firstName, employee_id):
         sql = "UPDATE  employees SET firstName = ? WHERE employee_id = ?"
         dataset = (firstName, employee_id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("First name has been successfully updated\n\nPress Enter to continue...")
         a = input()
 
     def update_surname(self, lastName, employee_id):
         sql = "UPDATE  employees SET lastName = ? WHERE employee_id = ?"
         dataset = (lastName, employee_id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("Last name has been successfully updated\n\nPress Enter to continue...")
         a = input()
 
     def update_basic_salary(self, basic_salary, employee_id):
         sql = "UPDATE  employees SET basic_salary = ? WHERE employee_id = ?"
         dataset = (basic_salary, employee_id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("Basic salary has been successfully updated\n\nPress Enter to continue...")
         a = input()
 
     def update_position(self, position, employee_id):
         sql = "UPDATE  employees SET position = ? WHERE employee_id = ?"
         dataset = (lastName, employee_id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("Position has been successfully updated\n\nPress Enter to continue...")
         a = input()
 
     def update_department_id(self, department_id, employee_id):
         sql = "UPDATE  employees SET department_id = ? WHERE employee_id = ?"
         dataset = (department_id, employee_id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("Department has been successfully updated\n\nPress Enter to continue...")
         a = input()
 
     def remove_employee_duplicates(self):
         """Removes duplicate employees from database by firstName, lastName, sex, birth_year set of columns"""
         sql = "DELETE FROM employees WHERE rowid NOT IN (SELECT MIN(rowid) FROM employees GROUP BY firstName, lastName, sex, birth_year);"
-        cur = self.conn.cursor()
-        cur.execute(sql)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
 
     def export_to_df(self):
         """Read employees table and return dataframe"""
@@ -267,9 +257,7 @@ class EmployeeDatabase(Database):
     def remove_employee(self,employee_id):
         sql = "DELETE FROM employees WHERE employee_id = ?"
         dataset = (employee_id,)
-        cur = self.conn.cursor()
-        cur.execute(sql,dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
 
         print("Employee has been successfull removed!\n")
 
@@ -322,16 +310,14 @@ class EmployeeDatabase(Database):
         new_salary = basic_salary + increase
 
         dataset = (new_salary,id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("Basic salary has been increased by {0} and is now equal {1}\n\n".format(increase, new_salary))
 
     def add_courtesy(self,firstName, courtesy,id):
         sql = "UPDATE employees SET firstName = ? WHERE employee_id = ?"
         new_name = courtesy + " " + firstName
         dataset = (new_name, id)
-        cur = self.conn.cursor()
-        cur.execute(sql, dataset)
-        self.conn.commit()
+        self.execute_sql(sql,dataset)
+
         print("First name is now: {0}\n\n".format(new_name))

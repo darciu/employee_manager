@@ -1,96 +1,31 @@
 import sys
-from database import DepartmentDatabase
-from employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
+from modules.database import DepartmentDatabase
+from modules.employees import Trainee, Junior, Mid, Senior, Administrative, Executive, Manager
 
-def emp_edit_personal_data(employee, id):
+
+def search_menu():
     condition = True
     while condition:
         print("""Please select one of the following options:
-                1. Change first name
-                2. Change last name
-                3. Change basic salary
-                4. Change position
-                5. Change department
-                6. Back""")
-
-        option = input()
-
-        if option == "1":
-            employee.change_firstName(id)
-        elif option == "2":
-            employee.change_lastName(id)
-        elif option == "3":
-            employee.change_basic_salary(id)
-        elif option == "4":
-            employee.change_position(id)
-        elif option == "5":
-            employee.change_department(id)
-        elif option == "6":
-            condition = False
-        else:
-            print("Invalid value!")
-
-
-def emp_personal_data_menu(employee, id):
-    condition = True
-    while condition:
-        print("""Please select one of the following options:
-                1. Display employee data
-                2. Edit personal data
-                3. Back""")
-        option = input()
-        if option == "1":
-            employee.display_employee_data()
-        elif option == "2":
-            emp_edit_personal_data(employee, id)
-        elif option == "3":
-            condition = False
-        else:
-            print("Invalid value!")
-
-def employee_statistics(employee):
-
-    percentile = round((employee.count_lt_salary(employee.basic_salary)/employee.count_salary()) * 100,0)
-    print("{0}'s basic salary is {1}.\n".format(employee.firstName, employee.basic_salary))
-    print("That is {0} more than the minimum and {1} less than maximum salary.".format(
-        employee.basic_salary - employee.min_salary(), employee.max_salary() - employee.basic_salary
-    ))
-
-    print("This is {0} percentile".format(percentile))
-
-    print("\nThere are {0} employees in company.\nAverage salary is {1}.\nTotal sum of salaries is {2}\n\n".format(
-        employee.count_salary(),round(employee.average_salary(),1),employee.sum_salary()
-    ))
-
-
-
-
-
-def employee_menu(employee, id):
-    condition = True
-    while condition:
-        print("""Please select one of the following options:
-                1. Employee personal data
-                2. Employee statistics 
-                3. Special functions (according to employees position)
+                1. Search by Employee ID
+                2. See employees by department
+                3. See employees by position
                 4. Back
                 5. Exit application""")
-
         option = input()
         if option == "1":
-            emp_personal_data_menu(employee, id)
+            search_by_ID()
         elif option == "2":
-            employee_statistics(employee)
+            see_by_department()
         elif option == "3":
-            employee.print_special_functions(id)
+            see_by_position()
         elif option == "4":
             condition = False
         elif option == "5":
+            print("Goodbye!")
             sys.exit()
         else:
             print("Invalid value!")
-
-
 
 def search_by_ID():
     """Create Employee instance according to the position"""
@@ -107,6 +42,7 @@ def search_by_ID():
     employee = emp_class_dictionary.get(row[8])
 
     employee_menu(employee, row[0])
+
 
 def see_by_department():
 
@@ -139,30 +75,103 @@ def see_by_position():
 
 
 
+        ########################################
 
-def search_menu():
+
+
+
+def employee_menu(employee, id):
     condition = True
     while condition:
         print("""Please select one of the following options:
-                1. Search by Employee ID
-                2. See employees by department
-                3. See employees by position
+                1. Employee personal data
+                2. Employee statistics 
+                3. Special functions (according to employees position)
                 4. Back
                 5. Exit application""")
+
         option = input()
         if option == "1":
-            search_by_ID()
+            emp_personal_data_menu(employee, id)
+
         elif option == "2":
-            see_by_department()
+            employee_statistics(employee)
+
         elif option == "3":
-            see_by_position()
+            employee.print_special_functions(id)
+
         elif option == "4":
             condition = False
         elif option == "5":
-            print("Goodbye")
+
+            print("Goodbye!")
             sys.exit()
         else:
-            print("Provided value is not correct!")
+            print("Invalid value!")
+
+
+def emp_personal_data_menu(employee, id):
+    condition = True
+    while condition:
+        print("""Please select one of the following options:
+                1. Display employee data
+                2. Edit employee data
+                3. Back""")
+        option = input()
+        if option == "1":
+            employee.display_employee_data()
+        elif option == "2":
+            emp_edit_personal_data(employee, id)
+        elif option == "3":
+            condition = False
+        else:
+            print("Invalid value!")
+
+
+def employee_statistics(employee):
+
+    percentile = round((employee.count_lt_salary(employee.basic_salary)/employee.count_salary()) * 100,0)
+    print("{0}'s basic salary is {1}.\n".format(employee.firstName, employee.basic_salary))
+    print("That is {0} more than the minimum and {1} less than maximum salary.".format(
+        employee.basic_salary - employee.min_salary(), employee.max_salary() - employee.basic_salary
+    ))
+
+    print("This is {0} percentile".format(percentile))
+
+    print("\nThere are {0} employees in company.\nAverage salary is {1}.\nTotal sum of salaries is {2}\n\n".format(
+        employee.count_salary(),round(employee.average_salary(),1),employee.sum_salary()
+    ))
+
+
+
+def emp_edit_personal_data(employee, id):
+    condition = True
+    while condition:
+        print("""Please select one of the following options:
+                1. Change first name
+                2. Change last name
+                3. Change basic salary
+                4. Change position
+                5. Change department
+                6. Back""")
+
+        option = input()
+
+        if option == "1":
+            employee.change_firstName(id)
+        elif option == "2":
+            employee.change_lastName(id)
+        elif option == "3":
+            employee.change_basic_salary(id)
+        elif option == "4":
+            employee.change_position(id)
+        elif option == "5":
+            employee.change_department(id)
+        elif option == "6":
+            condition = False
+        else:
+            print("Invalid value!")
+
 
 
 #######################

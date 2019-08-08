@@ -1,5 +1,5 @@
 import datetime
-from database import EmployeeDatabase, DepartmentDatabase
+from modules.database import EmployeeDatabase, DepartmentDatabase
 import sys
 
 class Employee:
@@ -52,21 +52,21 @@ class Employee:
 
     def change_firstName(self, id):
 
-        from manage_employee import get_name
+        from modules.manage_employee import get_name
         print("Current name is: ", self.firstName)
         firstName = get_name()
         self.db.update_name(firstName, id)
         self.firstName = firstName
 
     def change_lastName(self, id):
-        from manage_employee import get_surname
+        from modules.manage_employee import get_surname
         print("Current name is: ", self.lastName)
         lastName = get_surname()
         self.db.update_surname(lastName, id)
         self.lastName = lastName
 
     def change_basic_salary(self,id):
-        from manage_employee import get_basic_salary
+        from modules.manage_employee import get_basic_salary
         print("Current basic salary is: ", self.basic_salary)
         basic_salary = get_basic_salary()
         self.db.update_basic_salary(basic_salary, id)
@@ -192,11 +192,14 @@ class Employee:
                         else:
                             print("It seems that there is already Mrs before first name!\n")
 
+
             elif option == "4":
                 condition = False
+
             elif option == "5":
                 print("Goodbye!")
                 sys.exit()
+
             else:
                 print("Invalid value!")
 

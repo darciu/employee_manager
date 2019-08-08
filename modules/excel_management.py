@@ -2,8 +2,8 @@ import pandas as pd
 import os
 import sys
 
-from employees import Trainee, Junior, Mid, Senior, Manager, Administrative, Executive
-from database import EmployeeDatabase
+from modules.employees import Trainee, Junior, Mid, Senior, Manager, Administrative, Executive
+from modules.database import EmployeeDatabase
 def get_excel_file():
     """Returns pandas dataframe"""
     for file in os.listdir('input'):
@@ -81,4 +81,7 @@ def import_export_employees():
         elif option == "3":
             condition = False
         elif option == "4":
+            print("Goodbye!")
             sys.exit()
+        else:
+            print("Invalid value!")

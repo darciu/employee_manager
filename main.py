@@ -1,10 +1,11 @@
-from search_employee import search_menu
-from manage_employee import manage_menu
-from manage_departments import manage_dept_menu
+from modules.search_employee import search_menu
+from modules.manage_employee import manage_menu
+from modules.manage_departments import manage_dept_menu
 import sys
-from database import BuildDatabase
+from modules.database import BuildDatabase
 
 if __name__ == "__main__":
+    """Welcome Menu"""
     db = BuildDatabase()
     db.conn.close()
 
@@ -17,6 +18,7 @@ if __name__ == "__main__":
                 2. Manage employees
                 3. Manage departments
                 4. Exit application""")
+
         option = input()
         if option == "1":
             search_menu()
@@ -28,4 +30,4 @@ if __name__ == "__main__":
             print("Goodbye")
             sys.exit()
         else:
-            print("Please provide a correct option!")
+            print("Invalid value!")

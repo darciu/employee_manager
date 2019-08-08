@@ -1,5 +1,5 @@
 import sys
-from database import DepartmentDatabase
+from modules.database import DepartmentDatabase
 
 
 def manage_dept_menu():
@@ -46,13 +46,15 @@ def manage_dept_menu():
             else:
                 print("There is no {0} department in database!\n".format(dept_name))
 
+
         elif option == "4":
             condition = False
+
         elif option == "5":
             print("Goodbye")
             sys.exit()
         else:
-            print("Provided value is not correct!")
+            print("Invalid value!")
 
 
 
